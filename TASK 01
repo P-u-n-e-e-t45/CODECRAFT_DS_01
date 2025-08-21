@@ -1,0 +1,20 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Create dummy dataset
+data = {
+    "Sex": ["male","female","male","female","male","female","female"],
+    "Age": [22, 38, 26, 35, 28, 19, 40]
+}
+df = pd.DataFrame(data)
+
+# Bar Chart
+sns.countplot(x="Sex", data=df, palette="pastel")
+plt.title("Gender Distribution")
+plt.show()
+
+# Histogram
+sns.histplot(df["Age"], bins=5, kde=True, color="skyblue")
+plt.title("Age Distribution")
+plt.show()
