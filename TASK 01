@@ -1,20 +1,42 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import random
 
-# Create dummy dataset
+# List of 50 countries (sample world countries)
+countries = [
+    "India","USA","China","Brazil","Russia","Japan","Germany","UK","France","Italy",
+    "Canada","Australia","Mexico","South Africa","Nigeria","Egypt","Spain","Turkey","Argentina","Chile",
+    "Colombia","Peru","Saudi Arabia","UAE","Iran","Iraq","Pakistan","Bangladesh","Sri Lanka","Nepal",
+    "Thailand","Vietnam","Malaysia","Singapore","Indonesia","Philippines","South Korea","North Korea","Israel","Jordan",
+    "Kenya","Ethiopia","Morocco","Algeria","Sudan","Poland","Ukraine","Sweden","Norway","Denmark"
+]
+
+# Generate synthetic dataset
 data = {
-    "Sex": ["male","female","male","female","male","female","female"],
-    "Age": [22, 38, 26, 35, 28, 19, 40]
+    "Country": [random.choice(countries) for _ in range(500)],   # 500 random people
+    "Gender": [random.choice(["Male","Female"]) for _ in range(500)],
+    "Age": [random.randint(15, 70) for _ in range(500)]          # Ages between 15–70
 }
 df = pd.DataFrame(data)
 
-# Bar Chart
-sns.countplot(x="Sex", data=df, palette="pastel")
-plt.title("Gender Distribution")
+# --------------------------
+# Bar Chart: Gender by Country
+# --------------------------
+plt.figure(figsize=(14,6))
+sns.countplot(x="Country", hue="Gender", data=df, palette="pastel", order=df["Country"].value_counts().index)
+plt.title("Gender Distribution by Country")
+plt.xticks(rotation=90)
+plt.xlabel("Country")
+plt.ylabel("Count")
 plt.show()
 
-# Histogram
-sns.histplot(df["Age"], bins=5, kde=True, color="skyblue")
-plt.title("Age Distribution")
+# --------------------------
+# Histogram: Age Distribution by Country
+# --------------------------
+plt.figure(figsize=(10,6))
+sns.histplot(data=df, x="Age", hue="Country", multiple="stack", bins=20)
+plt.title("Age Distribution Across Countries")
+plt.xlabel("Age")
+plt.ylabel("Frequency")
 plt.show()
